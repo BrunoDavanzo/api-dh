@@ -20,7 +20,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       senha: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       status: {
         type: Sequelize.BOOLEAN,

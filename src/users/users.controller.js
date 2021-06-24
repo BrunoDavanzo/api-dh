@@ -1,8 +1,8 @@
 const UserService = require("./users.service")
 
 class UserController {
-    static findAll(req, res){
-       const users = UserService.findAll()
+    static async findAll(req, res){
+       const users = await UserService.findAll()
 
         res.json(users)
     }
@@ -16,38 +16,42 @@ class UserController {
         res.json(user)
     }
 
-    static create(req, res) {
+    static async create(req, res) {
         const newUser ={
             nome: req.body.nome,
             email: req.body.email,
             telefone: req.body.telefone,
             senha: req.body.senha
         }
-        const userSaved = UserService.create(newUser)
+        const user = await UserService.create(newUser)
+            res.json(user)
 
-        res.json(userSaved)
     }
-    static update(req, res) {
+    static async update(req, res) {
+        try {
         const {id} = req.params
 
         const userData = {
             nome: req.body.nome,
             email: req.body.email,
             telefone: req.body.telefone,
-            senha: req.body.senha
+            status: req.body.status
         }
         
-        const userUpdated = UserService.update(id, userData)
-        
+        const userUpdated = await UserService.update(id, userData)
+
         res.json(userUpdated)
+     }  catch (err) {
+        res.status(400).json(err)
+       }
     }
     
-    static remove(req, res) {
+    static async remove(req, res) {
         const {id} = req.params
-        const result = UserService.remove(id)
+        const result = await UserService.remove(id)
 
 
-        res.json({ status: 'Apagar usuario'})
+        res.json({ success: result})
     }
 }
 module.exports = UserController

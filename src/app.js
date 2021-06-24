@@ -2,6 +2,8 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors')
+
 
 const homeRouter = require('./home/home.routes');
 const usersRouter = require('./users/users.routes');
